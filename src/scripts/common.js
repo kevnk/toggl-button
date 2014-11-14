@@ -218,6 +218,15 @@ var togglbutton = {
       this.removeEventListener("change", handler);
     });
 
+    // Add tags to tag dropdown
+    var tagHtml = '';
+    for (var i = togglbutton.tags.length - 1; i >= 0; i--) {
+      tagHtml += '<option value="' + togglbutton.tags[i] + '" selected>' + togglbutton.tags[i] + '</option>';
+    };
+    tagHtml += $('#toggl-button-tag').innerHTML;
+    $('#toggl-button-tag').innerHTML = tagHtml;
+    updateTags();
+
     document.addEventListener("click", handler);
   },
 
@@ -267,6 +276,7 @@ var togglbutton = {
         };
       }
       togglbutton.element = e.target;
+      togglbutton.tags = invokeIfFunction(params.tags) || [];
       chrome.extension.sendMessage(opts, togglbutton.addEditForm);
 
       return false;
